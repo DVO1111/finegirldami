@@ -25,8 +25,12 @@ python3 -m http.server 8000
 
 ## Before going live
 
-- **Optional: add a photo.** Drop an image into `assets/` and reference it in the hero,
-  plus as the `og:image` meta tag for nicer link previews.
+- **Add the portrait.** The hero has a framed slot for it. Commit the image as
+  `assets/dami.jpg` (`.png`, `.jpeg` and `.webp` also work — the page tries each in
+  turn). Until a file is present the frame shows an "FD" monogram, so the page is
+  never broken. Square images look best; the source is displayed at 380px.
+- **Optional: set `og:image`.** Point it at the same file for richer link previews
+  on X and LinkedIn.
 
 ## Sections
 
@@ -38,7 +42,10 @@ already published.
 
 ## Deploying
 
-Any static host works.
+Live at **https://dvo1111.github.io/finegirldami/**, published by
+`.github/workflows/deploy-pages.yml` on every push to the default branch.
+
+Any other static host works too.
 
 **GitHub Pages** — repo *Settings → Pages*, source: deploy from branch, pick the
 branch and `/ (root)`.

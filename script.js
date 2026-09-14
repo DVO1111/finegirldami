@@ -91,6 +91,61 @@
     });
   });
 
+  /* ---- Portrait: use the first image file that actually exists ---- */
+  (function () {
+    var img = document.getElementById('portraitImg');
+    var frame = document.getElementById('portrait');
+    if (!img || !frame) return;
+
+    var candidates = ['assets/dami.jpg', 'assets/dami.png', 'assets/dami.jpeg', 'assets/dami.webp'];
+    var i = 0;
+
+    function tryNext() {
+      if (i >= candidates.length) {
+        frame.classList.add('portrait--empty');   // fall back to the monogram
+        return;
+      }
+      img.src = candidates[i++];
+    }
+
+    img.addEventListener('error', tryNext);
+    tryNext();
+  })();
+
+  /* ---- Typewriter: the page writes its own subtitle ---- */
+  (function () {
+    var out = document.getElementById('typeOut');
+    if (!out || reduceMotion) return;   // reduced motion keeps the static first line
+
+    var phrases = [
+      'threads people actually bookmark.',
+      'whitepapers people actually finish.',
+      'explainers people finally understand.',
+      'copy that stops the "wait, what do you do?"'
+    ];
+
+    var phrase = 0, chars = phrases[0].length, deleting = false;
+
+    function tick() {
+      var full = phrases[phrase];
+      chars += deleting ? -1 : 1;
+      out.textContent = full.slice(0, chars);
+
+      var delay = deleting ? 28 : 55;
+      if (!deleting && chars === full.length) {
+        delay = 2100;                       // let a finished sentence sit and be read
+        deleting = true;
+      } else if (deleting && chars === 0) {
+        deleting = false;
+        phrase = (phrase + 1) % phrases.length;
+        delay = 420;
+      }
+      setTimeout(tick, delay);
+    }
+
+    setTimeout(tick, 2100);   // the first phrase is already in the HTML — hold, then continue
+  })();
+
   /* ---- Footer year ---- */
   var year = document.getElementById('year');
   if (year) year.textContent = '© ' + new Date().getFullYear();
