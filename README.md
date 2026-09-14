@@ -25,9 +25,6 @@ python3 -m http.server 8000
 
 ## Before going live
 
-- **Set the email address.** In `index.html`, the contact button uses a placeholder:
-  `mailto:your@email.com` (marked with a `TODO` comment). Replace it with a real address,
-  or swap the button for another contact route.
 - **Check the Medium handle.** The site links to `medium.com/@finegirldami`. The Notion
   portfolio lists `medium.com/@_Finegirldami` — confirm which one is current.
 - **Optional: add a photo.** Drop an image into `assets/` and reference it in the hero,
