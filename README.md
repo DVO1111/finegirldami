@@ -25,8 +25,6 @@ python3 -m http.server 8000
 
 ## Before going live
 
-- **Check the Medium handle.** The site links to `medium.com/@finegirldami`. The Notion
-  portfolio lists `medium.com/@_Finegirldami` — confirm which one is current.
 - **Optional: add a photo.** Drop an image into `assets/` and reference it in the hero,
   plus as the `og:image` meta tag for nicer link previews.
 
