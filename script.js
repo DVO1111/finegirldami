@@ -112,6 +112,29 @@
     tryNext();
   })();
 
+  /* ---- Blink: irregular, with the occasional double ---- */
+  (function () {
+    var frame = document.getElementById('portrait');
+    if (!frame || reduceMotion) return;
+
+    function blink() {
+      frame.classList.add('is-blinking');
+      setTimeout(function () { frame.classList.remove('is-blinking'); }, 160);
+    }
+
+    function schedule() {
+      // Real blinks are irregular: mostly 3-7s apart, sometimes a quick double.
+      var wait = 3000 + Math.random() * 4000;
+      setTimeout(function () {
+        blink();
+        if (Math.random() < 0.28) setTimeout(blink, 260);
+        schedule();
+      }, wait);
+    }
+
+    schedule();
+  })();
+
   /* ---- Typewriter: the page writes its own subtitle ---- */
   (function () {
     var out = document.getElementById('typeOut');

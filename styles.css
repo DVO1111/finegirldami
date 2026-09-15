@@ -332,8 +332,74 @@ ul{ margin:0; padding:0; list-style:none; }
   color:var(--violet);
   background:linear-gradient(150deg, var(--black-soft) 0%, #241a3d 100%);
 }
-.portrait--empty .portrait__img{ display:none; }
+.portrait--empty .portrait__frame{ display:none; }
 .portrait--empty .portrait__monogram{ display:grid; }
+
+/* The frame carries the float so the lids ride along with the face */
+.portrait__frame{
+  position:relative;
+  display:block;
+  width:100%; height:100%;
+  border-radius:26px;
+  overflow:hidden;
+  border:1px solid rgba(196,181,253,.34);
+  box-shadow:0 30px 60px -28px rgba(76,29,149,.85);
+  animation:float 7.5s ease-in-out infinite alternate;
+}
+.portrait__frame .portrait__img{
+  border:0; border-radius:0; box-shadow:none; animation:none;
+}
+
+/* ---------- Blink ----------
+   Each lid is clipped to that eye's own almond outline, traced from the
+   artwork, so a descending fill covers the opening exactly and no sclera
+   peeks out at the slanted outer corners. The clip sits on the wrapper and
+   the fill animates inside it, since a transform would otherwise drag the
+   clip along with it. Geometry is a percentage of the image, so it holds
+   at any rendered size.                                                   */
+.lid{
+  position:absolute;
+  overflow:hidden;
+  pointer-events:none;
+}
+.lid__fill{
+  position:absolute; inset:0;
+  transform:scaleY(0);
+  transform-origin:top center;
+  will-change:transform;
+}
+/* the lash line, carried down along the fill's leading edge */
+.lid__fill::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0;
+  height:14%; min-height:1px;
+  background:linear-gradient(rgba(24,13,15,0), rgba(24,13,15,.78));
+}
+
+.lid--l{
+  left:42.68%; top:46.68%; width:10.94%; height:3.71%;
+  clip-path:polygon(0% 31.6%, 16.1% 7.9%, 38.4% 2.6%, 60.7% 0%, 78.6% 7.9%,
+                    97.3% 39.5%, 100% 63.2%, 90.2% 84.2%, 69.6% 100%,
+                    47.3% 94.7%, 23.2% 73.7%, 6.3% 52.6%);
+}
+.lid--l .lid__fill{ background:linear-gradient(#6d3a2a, #5d2e22); }
+
+.lid--r{
+  left:58.98%; top:47.07%; width:7.62%; height:4.10%;
+  clip-path:polygon(0% 40.5%, 14.1% 11.9%, 39.7% 0%, 65.4% 2.4%, 85.9% 19.0%,
+                    100% 40.5%, 87.2% 64.3%, 66.7% 85.7%, 42.3% 100%,
+                    17.9% 88.1%, 3.8% 64.3%);
+}
+.lid--r .lid__fill{ background:linear-gradient(#5e3327, #4c2620); }
+
+.is-blinking .lid__fill{ animation:blinkLid 150ms ease-in-out; }
+@keyframes blinkLid{
+  0%   { transform:scaleY(0); }
+  45%  { transform:scaleY(1); }
+  55%  { transform:scaleY(1); }
+  100% { transform:scaleY(0); }
+}
+}
 
 /* A margin rule, as on a manuscript page */
 .portrait__rule{
@@ -739,7 +805,9 @@ ul{ margin:0; padding:0; list-style:none; }
   }
   .js .reveal{ opacity:1; transform:none; }
   .portrait__img,
-  .portrait__monogram{ transform:none; }
+  .portrait__frame,
+  .portrait__monogram{ transform:none; animation:none; }
+  .lid{ display:none; }
   .typeline__caret{ opacity:1; }
 }
 
