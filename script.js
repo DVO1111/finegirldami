@@ -112,6 +112,26 @@
     tryNext();
   })();
 
+  /* ---- Proof screenshots: show only the ones whose file exists ---- */
+  (function () {
+    var imgs = document.querySelectorAll('img[data-candidates]');
+    Array.prototype.forEach.call(imgs, function (img) {
+      var list = img.getAttribute('data-candidates').split(',');
+      var i = 0;
+
+      function next() {
+        if (i >= list.length) return;            // no file yet: figure stays hidden
+        img.src = list[i++].trim();
+      }
+      img.addEventListener('error', next);
+      img.addEventListener('load', function () {
+        var fig = img.closest('.proof');
+        if (fig) fig.hidden = false;
+      });
+      next();
+    });
+  })();
+
   /* ---- Blink: irregular, with the occasional double ---- */
   (function () {
     var frame = document.getElementById('portrait');
