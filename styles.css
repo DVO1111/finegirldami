@@ -690,6 +690,40 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 
 .thread{ min-width:0; }
 
+/* live embed — all five locked to one height so the frames match.
+   X sizes each iframe to its own content, which otherwise makes a long
+   thread tower over a short one. The overflow clip plus the fade below
+   makes the cut look deliberate, and thread__more carries the reader on. */
+.thread--embedded .thread__embed{
+  position:relative;
+  height:420px;
+  overflow:hidden;
+  border-radius:14px;
+  background:#000;
+}
+.thread--embedded .thread__embed::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:96px;
+  background:linear-gradient(rgba(0,0,0,0), #000 88%);
+  pointer-events:none;
+}
+.thread--embedded iframe{ height:420px !important; }
+.thread--embedded .thread__more{ display:flex; }
+
+.thread__more{
+  display:none;                      /* only shown once an embed is in place */
+  align-items:center; justify-content:center; gap:8px;
+  margin-top:10px;
+  padding:11px 14px;
+  font-size:.85rem; font-weight:600;
+  color:var(--violet);
+  text-decoration:none;
+  border:1px solid var(--black-line);
+  border-radius:11px;
+  transition:border-color .25s var(--ease), background-color .25s var(--ease);
+}
+.thread__more:hover{ border-color:rgba(139,92,246,.55); background:rgba(139,92,246,.10); }
+
 /* live embed */
 .thread .twitter-tweet-rendered{ margin:0 !important; }
 .thread iframe{ max-width:100% !important; border-radius:14px; }

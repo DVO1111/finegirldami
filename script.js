@@ -112,6 +112,27 @@
     tryNext();
   })();
 
+  /* ---- Threads: mark a card once X has swapped in its iframe ----
+     Only then does the fixed frame apply; the fallback link card keeps its
+     own natural height. ---- */
+  (function () {
+    var cards = document.querySelectorAll('.thread');
+    if (!cards.length) return;
+
+    function sweep() {
+      Array.prototype.forEach.call(cards, function (card) {
+        if (card.querySelector('iframe')) card.classList.add('thread--embedded');
+      });
+    }
+
+    sweep();
+    var tries = 0;
+    var timer = setInterval(function () {
+      sweep();
+      if (++tries > 20) clearInterval(timer);   // give widgets.js ~10s
+    }, 500);
+  })();
+
   /* ---- Proof screenshots: show only the ones whose file exists ---- */
   (function () {
     var imgs = document.querySelectorAll('img[data-candidates]');
