@@ -632,11 +632,13 @@ ul,ol{ margin:0; padding:0; list-style:none; }
   margin-bottom:.9em;
 }
 .proj__text--dim{ color:#6B6480; }
+/* Her results sit inside the copy where she wrote them, not pinned to the
+   bottom of the card, so they no longer carry a footer rule. */
 .proj__stats{
   display:flex; flex-wrap:wrap; gap:8px;
-  margin-top:auto; padding-top:18px;
-  border-top:1px solid var(--mist-line);
+  margin:2px 0 18px;
 }
+.proj__text--after{ margin-top:0; }
 .proj__stats li{
   font-size:.82rem; color:var(--text-mute);
   background:var(--mist);
