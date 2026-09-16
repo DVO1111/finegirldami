@@ -673,37 +673,51 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 }
 
 /* ---------- Featured threads ---------- */
-.threads{ margin-top:clamp(30px, 5vh, 48px); }
-.threads__title{
-  font-family:var(--serif);
-  font-size:1.3rem; font-weight:500; letter-spacing:-.02em;
-  margin-bottom:18px;
-}
+/* Its own dark section, so it reads as a destination rather than a footnote
+   at the bottom of the projects list. */
 .threads__list{
   list-style:none;
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-  gap:10px;
-  counter-reset:none;
+  grid-template-columns:1fr;
+  gap:clamp(12px, 1.6vw, 18px);
 }
+/* Five items: two rows of wrapping would strand one on its own, so step
+   straight from 1 to 2 to all five across. */
+@media (min-width:560px){ .threads__list{ grid-template-columns:repeat(2, 1fr); } }
+@media (min-width:980px){ .threads__list{ grid-template-columns:repeat(5, 1fr); } }
 .threads__list a{
-  display:flex; align-items:center; gap:12px;
-  padding:14px 16px;
-  background:var(--white);
-  border:1px solid var(--mist-line);
-  border-radius:12px;
+  display:flex; align-items:center; gap:14px;
+  padding:22px 20px;
+  background:var(--black-soft);
+  border:1px solid var(--black-line);
+  border-radius:14px;
   text-decoration:none;
-  transition:border-color .25s var(--ease), transform .25s var(--ease);
+  transition:border-color .25s var(--ease), transform .25s var(--ease), background-color .25s var(--ease);
 }
-.threads__list a:hover{ border-color:var(--violet); transform:translateY(-2px); }
+.threads__list a:hover{
+  border-color:rgba(139,92,246,.55);
+  background:rgba(139,92,246,.09);
+  transform:translateY(-3px);
+}
 .threads__n{
   font-family:var(--serif);
-  font-size:1.05rem; color:var(--violet-deep);
+  font-size:1.5rem; line-height:1;
   font-variant-numeric:tabular-nums;
+  background:linear-gradient(120deg, #fff 0%, var(--violet) 140%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
 }
-.threads__label{ font-size:.88rem; font-weight:500; color:var(--text-dark); }
-.threads__go{ margin-left:auto; color:var(--violet-deep); transition:transform .25s var(--ease); }
-.threads__list a:hover .threads__go{ transform:translateX(4px); }
+.threads__label{
+  font-size:.92rem; font-weight:500;
+  color:var(--text-on-black);
+}
+.threads__go{
+  margin-left:auto;
+  color:var(--violet);
+  font-size:1.05rem;
+  transition:transform .25s var(--ease);
+}
+.threads__list a:hover .threads__go{ transform:translate(3px, -3px); }
 
 /* ---------- Services ---------- */
 .services{
