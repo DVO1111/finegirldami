@@ -155,38 +155,22 @@
     schedule();
   })();
 
-  /* ---- Typewriter: the page writes its own subtitle ---- */
+  /* ---- Typewriter: types her line once, then leaves the caret blinking ----
+     It used to cycle through extra phrases, but those were invented copy. The
+     tagline is hers, so it is the only thing written. ---- */
   (function () {
     var out = document.getElementById('typeOut');
-    if (!out || reduceMotion) return;   // reduced motion keeps the static first line
+    if (!out || reduceMotion) return;   // reduced motion keeps the static line
 
-    var phrases = [
-      'content people actually want to read.',
-      'threads people bookmark instead of scroll past.',
-      'explainers that finally make sense.',
-      'stories that make people care.'
-    ];
+    var full = out.textContent;
+    out.textContent = '';
+    var i = 0;
 
-    var phrase = 0, chars = phrases[0].length, deleting = false;
-
-    function tick() {
-      var full = phrases[phrase];
-      chars += deleting ? -1 : 1;
-      out.textContent = full.slice(0, chars);
-
-      var delay = deleting ? 28 : 55;
-      if (!deleting && chars === full.length) {
-        delay = 2100;                       // let a finished sentence sit and be read
-        deleting = true;
-      } else if (deleting && chars === 0) {
-        deleting = false;
-        phrase = (phrase + 1) % phrases.length;
-        delay = 420;
-      }
-      setTimeout(tick, delay);
-    }
-
-    setTimeout(tick, 2100);   // the first phrase is already in the HTML — hold, then continue
+    (function tick() {
+      if (i > full.length) return;      // done: the caret keeps blinking on its own
+      out.textContent = full.slice(0, i++);
+      setTimeout(tick, 48);
+    })();
   })();
 
   /* ---- Footer year ---- */
