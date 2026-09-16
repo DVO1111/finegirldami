@@ -141,10 +141,10 @@
     if (!out || reduceMotion) return;   // reduced motion keeps the static first line
 
     var phrases = [
-      'threads people actually bookmark.',
-      'whitepapers people actually finish.',
-      'explainers people finally understand.',
-      'copy that stops the "wait, what do you do?"'
+      'content people actually want to read.',
+      'threads people bookmark instead of scroll past.',
+      'explainers that finally make sense.',
+      'stories that make people care.'
     ];
 
     var phrase = 0, chars = phrases[0].length, deleting = false;
