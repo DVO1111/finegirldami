@@ -674,50 +674,58 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 
 /* ---------- Featured threads ---------- */
 /* Its own dark section, so it reads as a destination rather than a footnote
-   at the bottom of the projects list. */
+   at the bottom of the projects list. Each item is an X embed: widgets.js
+   swaps the blockquote for a live iframe of the thread. Until that lands —
+   or if it never does, because the script is blocked — the blockquote below
+   is styled as a plain link card, so the section is never broken. */
 .threads__list{
   list-style:none;
   display:grid;
   grid-template-columns:1fr;
-  gap:clamp(12px, 1.6vw, 18px);
+  gap:clamp(14px, 1.8vw, 20px);
+  align-items:start;
 }
-/* Five items: two rows of wrapping would strand one on its own, so step
-   straight from 1 to 2 to all five across. */
-@media (min-width:560px){ .threads__list{ grid-template-columns:repeat(2, 1fr); } }
-@media (min-width:980px){ .threads__list{ grid-template-columns:repeat(5, 1fr); } }
-.threads__list a{
-  display:flex; align-items:center; gap:14px;
-  padding:22px 20px;
+@media (min-width:640px){  .threads__list{ grid-template-columns:repeat(2, 1fr); } }
+@media (min-width:1040px){ .threads__list{ grid-template-columns:repeat(3, 1fr); } }
+
+.thread{ min-width:0; }
+
+/* live embed */
+.thread .twitter-tweet-rendered{ margin:0 !important; }
+.thread iframe{ max-width:100% !important; border-radius:14px; }
+
+/* pre-render / no-script card */
+.thread .twitter-tweet:not(.twitter-tweet-rendered){
+  margin:0;
+  padding:0;
   background:var(--black-soft);
   border:1px solid var(--black-line);
   border-radius:14px;
-  text-decoration:none;
   transition:border-color .25s var(--ease), transform .25s var(--ease), background-color .25s var(--ease);
 }
-.threads__list a:hover{
+.thread .twitter-tweet:not(.twitter-tweet-rendered):hover{
   border-color:rgba(139,92,246,.55);
   background:rgba(139,92,246,.09);
   transform:translateY(-3px);
 }
-.threads__n{
+.thread .twitter-tweet:not(.twitter-tweet-rendered) a{
+  display:flex; align-items:center; gap:13px;
+  padding:22px 20px;
+  text-decoration:none;
+  color:var(--text-on-black);
+  font-size:.92rem; font-weight:500;
+}
+.thread .twitter-tweet:not(.twitter-tweet-rendered) a span[aria-hidden]{
+  margin-left:auto; color:var(--violet); font-size:1.05rem;
+}
+.thread__n{
   font-family:var(--serif);
-  font-size:1.5rem; line-height:1;
+  font-size:1.45rem; line-height:1;
   font-variant-numeric:tabular-nums;
   background:linear-gradient(120deg, #fff 0%, var(--violet) 140%);
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; color:transparent;
 }
-.threads__label{
-  font-size:.92rem; font-weight:500;
-  color:var(--text-on-black);
-}
-.threads__go{
-  margin-left:auto;
-  color:var(--violet);
-  font-size:1.05rem;
-  transition:transform .25s var(--ease);
-}
-.threads__list a:hover .threads__go{ transform:translate(3px, -3px); }
 
 /* ---------- Services ---------- */
 .services{
